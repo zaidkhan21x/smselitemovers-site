@@ -1,0 +1,47 @@
+:root{--ink-0:#090909;--ink-1:#111111;--ink-2:#232323;--ind-1:#16303D;--ind-3:#224D5F;--teal-4:#6C9BAD;--dust:#F2EDEA;--signal:#FF8A3D;--signal-hover:#FF7A1F;--text:#F2EDEA;--text-2:rgba(242,237,234,.74);--text-3:rgba(242,237,234,.52);--line:rgba(242,237,234,.12);--display:var(--font-display),"Roboto Condensed","Arial Narrow",sans-serif;--body:var(--font-body),system-ui,-apple-system,"Segoe UI",sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink-0);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--text);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px}
+.top{position:sticky;top:0;z-index:10;background:rgba(17,17,17,.9);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.top-in{max-width:1100px;margin:0 auto;padding:0 20px;height:66px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:0 1 auto;min-width:0}
+.brand-logo{display:block;height:38px;width:auto;max-width:100%;aspect-ratio:915/392;color:var(--text)}
+.top-actions{display:flex;gap:8px;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 16px;border-radius:9px;font-weight:600;font-size:15px;text-decoration:none;white-space:nowrap;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 160ms ease}
+.btn:active{transform:scale(.97)}
+.btn-signal{background:var(--signal);color:var(--ink-1)}
+.btn-ghost{border:1px solid rgba(242,237,234,.3);color:var(--text)}
+@media (hover:hover) and (pointer:fine){.btn-signal:hover{background:var(--signal-hover)}.btn-ghost:hover{background:rgba(242,237,234,.08)}}
+main{max-width:760px;margin:0 auto;padding:64px 20px 40px}
+h1{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(44px,7vw,72px);line-height:.92;margin:0}
+.meta{margin-top:14px;color:var(--text-3);font-size:15px}
+.intro{margin-top:24px;font-size:19px;color:var(--text-2)}
+.toc{margin:32px 0 8px;padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:var(--ink-1)}
+.toc strong{display:block;font-size:15px;color:var(--text-3);font-weight:600;margin-bottom:8px}
+.toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px;font-size:15.5px}
+.toc li{margin:3px 0;break-inside:avoid}
+.toc a{color:var(--text-2);text-decoration:none}
+@media (hover:hover) and (pointer:fine){.toc a:hover{color:var(--text)}}
+h2{font-size:24px;font-weight:600;line-height:1.25;margin:48px 0 0;scroll-margin-top:90px}
+h3{font-size:18px;font-weight:600;margin:24px 0 0}
+p,ul{margin:12px 0 0;color:var(--text-2)}
+ul{padding-left:22px}
+li{margin:6px 0}
+strong{color:var(--text);font-weight:600}
+.box{margin-top:18px;padding:18px 20px;border-radius:14px;background:var(--ind-1);border:1px solid rgba(242,237,234,.1)}
+.box p:first-child{margin-top:0}
+.contact{list-style:none;padding:0}
+.contact li{margin:4px 0}
+.cta{margin-top:56px;padding:28px;border-radius:20px;background:var(--ind-1);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.cta p{margin:0;color:var(--text);font-size:19px;font-weight:600}
+.cta div{display:flex;gap:8px;flex-wrap:wrap}
+footer{max-width:1100px;margin:0 auto;padding:40px 20px 60px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;color:var(--text-3);font-size:14px}
+footer a{color:var(--text-3);text-decoration:none;margin-right:16px}
+@media (hover:hover) and (pointer:fine){footer a:hover{color:var(--text)}}
+@media (max-width:640px){.toc ol{columns:1}.top-actions .btn-ghost{display:none}main{padding-top:44px}body{font-size:16px}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* Phones: keep the header inside the screen (logo + "Get dispatched" only) */
+@media (max-width:640px){.top-in{padding:0 16px;gap:12px}.brand-logo{height:34px}}
+@media (max-width:360px){.top-in{padding:0 12px;gap:10px}.brand-logo{height:30px}.top-actions .btn{padding:0 12px;font-size:14px}}
