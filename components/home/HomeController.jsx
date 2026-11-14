@@ -3,7 +3,7 @@
 /* =========================================================
    Homepage behaviour: header, menu, equipment selector and
    truck swap, offer demo, service tabs, onboarding scroll
-   road, ?type= fallback and the lead form (UI only).
+   road, ?type= fallback, the lead form and measurement.
 
    The page markup is rendered on the server; this component
    renders nothing and wires up the same behaviour the Phase 2
@@ -13,6 +13,7 @@
 
 import { useEffect } from 'react';
 import { TYPES, ORDER, typeFromQuery, shadowScale } from '@/lib/hero-types';
+import { ADS_ID, ADS_LABELS } from '@/lib/analytics';
 
 export default function HomeController({ initialType, hasVariant }) {
   useEffect(() => {
@@ -212,6 +213,16 @@ export default function HomeController({ initialType, hasVariant }) {
     }));
     on(document, 'click', (e) => { const a = e.target.closest('[data-pick]'); if (a) select(a.dataset.pick); });
 
+    /* ---------- Measurement ----------
+       Every call link on the site carries data-call, so one listener
+       covers the header, hero, equipment cards, contact card, footer
+       and the sticky mobile bar. */
+    on(document, 'click', (e) => {
+      if (e.target.closest('[data-call]')) {
+        track('contact', { method: 'phone' }, ADS_LABELS.call);
+      }
+    });
+
     /* mobile: road scene ends right under the equipment selector */
     const spacer = $('.scene-spacer');
     const setSceneH = () => heroPanel.style.setProperty('--scene-h', `${spacer.offsetTop + spacer.offsetHeight}px`);
@@ -325,6 +336,23 @@ export default function HomeController({ initialType, hasVariant }) {
     }
     updateOb();
 
+    /* Sends one GA4 event and, once the Google Ads ids are filled in
+       (lib/analytics.js), the matching Google Ads conversion. Safe to
+       call before gtag has loaded: the calls queue on dataLayer and
+       run when it does. Never throws, so a blocked tag or an ad
+       blocker can't break the form or the call buttons. */
+    function track(eventName, params, adsLabel) {
+      try {
+        if (typeof window.gtag !== 'function') return;
+        window.gtag('event', eventName, params);
+        if (ADS_ID && adsLabel) {
+          window.gtag('event', 'conversion', { send_to: `${ADS_ID}/${adsLabel}` });
+        }
+      } catch {
+        /* measurement must never break the page */
+      }
+    }
+
     /* ---------- Lead form ---------- */
     /* One "@" with something before it, and a dotted domain after it.
        Deliberately permissive: the server checks too, and the real
@@ -381,6 +409,9 @@ export default function HomeController({ initialType, hasVariant }) {
       try {
         const res = await fetch('/api/lead', { method: 'POST', body });
         if (!res.ok) throw new Error(`status ${res.status}`);
+        // Only counted once the lead has actually been delivered, so a
+        // failed send is never reported to Google Ads as a lead.
+        track('generate_lead', { equipment: body.get('equipment') || 'unknown' }, ADS_LABELS.lead);
         const first = form.elements.name.value.trim().split(/\s+/)[0];
         $('#doneTitle').textContent = `Thanks, ${first}`;
         form.classList.add('is-done');

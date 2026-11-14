@@ -17,15 +17,33 @@ const isDev = process.env.NODE_ENV === 'development';
    - 'unsafe-eval' is only added for `next dev` (local development);
      production builds never get it.
    - img-src data: is for the select arrow drawn as a data: SVG in CSS.
-   When analytics / Google Ads tags are added in the next phase, their
-   domains must be added here (script-src, img-src, connect-src). */
+
+   Google tag (gtag.js) domains, for GA4 and Google Ads conversions.
+   Without these the browser refuses the tag and nothing is measured,
+   with no visible error on the page. Keep this list in step with
+   lib/analytics.js:
+   - googletagmanager.com    serves gtag.js itself
+   - google-analytics.com    where GA4 sends its hits
+   - analytics.google.com    GA4 hits in some regions
+   - doubleclick.net         Google Ads conversion pings and frames
+   - google.com              Google Ads conversion pings
+   Only these exact hosts are allowed, so no other third-party
+   script can load even if one is ever injected. */
+const google = {
+  script: 'https://www.googletagmanager.com',
+  img: 'https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://googleads.g.doubleclick.net',
+  connect: 'https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.google.com',
+  frame: 'https://td.doubleclick.net https://www.googletagmanager.com',
+};
+
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
+  `script-src 'self' 'unsafe-inline' ${google.script}${isDev ? " 'unsafe-eval'" : ''}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data:",
+  `img-src 'self' data: ${google.img}`,
   "font-src 'self'",
-  "connect-src 'self'",
+  `connect-src 'self' ${google.connect}`,
+  `frame-src 'self' ${google.frame}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
