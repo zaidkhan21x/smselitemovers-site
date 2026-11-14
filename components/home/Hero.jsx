@@ -120,9 +120,6 @@ export function Hero({ variant }) {
               <span><span className="call-word">Call </span>{SITE.phoneDisplay}</span>
             </a>
           </div>
-          <ul className="hero-trust ti-swap" id="heroTrust">
-            {copy.trust.map((t) => <li key={t}>{t}</li>)}
-          </ul>
         </div>
 
         <aside className="truck-info" aria-live="polite">
@@ -154,6 +151,14 @@ export function Hero({ variant }) {
         </div>
         <div className="scene-spacer" aria-hidden="true" />
       </div>
+
+      {/* Trust line. It sits under the panel rather than inside it: the
+          panel is a fixed-height overlay whose bottom-left corner is
+          taken by the equipment dock, so there is no room below the
+          buttons on a short viewport. */}
+      <ul className="hero-trust ti-swap" id="heroTrust">
+        {copy.trust.map((t) => <li key={t}>{t}</li>)}
+      </ul>
     </section>
   );
 }

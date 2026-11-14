@@ -128,8 +128,8 @@ h1,h2,h3,p{margin:0}
 .hero-copy .lede{margin-top:22px;color:rgba(242,237,234,.82);max-width:48ch}
 .hero-copy .cta-row{margin-top:30px}
 .hero-eyebrow{margin:0 0 14px;font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--signal)}
-.hero-trust{margin:24px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:14.5px;color:var(--text-2)}
-.hero-trust li{display:flex;align-items:center;gap:14px}
+.hero-trust{max-width:var(--wrap);margin:16px auto 0;padding:0 clamp(16px,3vw,28px);list-style:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 20px;font-size:14.5px;color:var(--text-2);text-align:center}
+.hero-trust li{display:flex;align-items:center;gap:20px}
 .hero-trust li+li::before{content:"·";color:var(--text-3);font-weight:700}
 
 .truck-info{position:absolute;z-index:3;top:clamp(108px,13vh,140px);right:clamp(20px,3vw,40px);width:300px;padding:18px 18px 16px;border-radius:18px;background:rgba(9,9,9,.42);border:1px solid rgba(242,237,234,.14);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
@@ -485,11 +485,10 @@ fieldset.field{border:0;padding:0;margin:0}
   .hero-copy .lede{order:4;position:relative;z-index:3;font-size:15.5px;line-height:1.5;margin:6px 0 0;padding:0 18px}
   .hero-copy .cta-row{order:5;position:relative;z-index:3;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 0;padding:0 18px 22px}
   .hero-copy .cta-row .btn{padding:0 10px;font-size:15px;height:48px}
-  .hero-copy .cta-row{padding-bottom:0}
   .call-word{display:none}
-  .hero-trust{order:6;position:relative;z-index:3;margin:14px 0 0;padding:0 18px 22px;font-size:13.5px;gap:4px 10px}
-  .hero-trust li{gap:10px}
-  .truck-info{order:7}
+  .hero-trust{margin:12px auto 0;padding:0 14px;font-size:13px;gap:4px 12px}
+  .hero-trust li{gap:12px}
+  .truck-info{order:6}
   .scene{bottom:auto;height:var(--scene-h,620px)}
   .nav-actions .btn-ghost{display:inline-flex;width:44px;height:44px;padding:0}
   .nav-actions .btn-ghost span{display:none}
