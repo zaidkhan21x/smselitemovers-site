@@ -1,11 +1,9 @@
 import { SITE, TEL_HREF } from '@/lib/site';
-import { Logo, LogoDefs } from '@/components/Logo';
+import { Logo } from '@/components/Logo';
 
 export function LegalHeader() {
   return (
     <header className="top">
-      {/* The logo geometry, once per page. <Logo /> points at it with <use>. */}
-      <LogoDefs />
       <div className="top-in">
         <a className="brand" href="/"><Logo className="brand-logo" /><span className="sr-only">{SITE.brand}</span></a>
         <div className="top-actions">
