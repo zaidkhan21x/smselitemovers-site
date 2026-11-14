@@ -13,7 +13,7 @@
 
 import { useEffect } from 'react';
 import { TYPES, ORDER, typeFromQuery, shadowScale } from '@/lib/hero-types';
-import { ADS_ID, ADS_LABELS } from '@/lib/analytics';
+import { ADS_ID, ADS_CONVERSIONS } from '@/lib/analytics';
 
 export default function HomeController({ initialType, hasVariant }) {
   useEffect(() => {
@@ -219,7 +219,7 @@ export default function HomeController({ initialType, hasVariant }) {
        and the sticky mobile bar. */
     on(document, 'click', (e) => {
       if (e.target.closest('[data-call]')) {
-        track('contact', { method: 'phone' }, ADS_LABELS.call);
+        track('contact', { method: 'phone' }, ADS_CONVERSIONS.call);
       }
     });
 
@@ -341,12 +341,19 @@ export default function HomeController({ initialType, hasVariant }) {
        call before gtag has loaded: the calls queue on dataLayer and
        run when it does. Never throws, so a blocked tag or an ad
        blocker can't break the form or the call buttons. */
-    function track(eventName, params, adsLabel) {
+    function track(eventName, params, conversion) {
       try {
         if (typeof window.gtag !== 'function') return;
         window.gtag('event', eventName, params);
-        if (ADS_ID && adsLabel) {
-          window.gtag('event', 'conversion', { send_to: `${ADS_ID}/${adsLabel}` });
+        if (ADS_ID && conversion?.label) {
+          const payload = { send_to: `${ADS_ID}/${conversion.label}` };
+          // Only sent where the conversion action takes its value from
+          // the event; otherwise Google uses the value set on the action.
+          if (typeof conversion.value === 'number') {
+            payload.value = conversion.value;
+            payload.currency = conversion.currency || 'USD';
+          }
+          window.gtag('event', 'conversion', payload);
         }
       } catch {
         /* measurement must never break the page */
@@ -411,7 +418,7 @@ export default function HomeController({ initialType, hasVariant }) {
         if (!res.ok) throw new Error(`status ${res.status}`);
         // Only counted once the lead has actually been delivered, so a
         // failed send is never reported to Google Ads as a lead.
-        track('generate_lead', { equipment: body.get('equipment') || 'unknown' }, ADS_LABELS.lead);
+        track('generate_lead', { equipment: body.get('equipment') || 'unknown' }, ADS_CONVERSIONS.lead);
         const first = form.elements.name.value.trim().split(/\s+/)[0];
         $('#doneTitle').textContent = `Thanks, ${first}`;
         form.classList.add('is-done');
