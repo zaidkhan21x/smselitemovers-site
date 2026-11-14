@@ -123,7 +123,7 @@ function Flatbed({ beam }) {
         <rect x="628" y="68" width="9" height="2.4" rx="1" fill="#2a2a2a" />
         <path d="M700 76H724M700 82H724M700 88H722" stroke="rgba(0,0,0,.2)" strokeWidth="1.4" />
         {/* door livery: logo */}
-        <use href="#logo-full" x="572" y="83.6" width="48" height="20.8" fill="#111" />
+        <use href="#logo-full" x="572" y="84.2" width="48" height="20.6" fill="#111" />
         <g fill="#FFD9BE">
           <circle cx="592" cy="15" r="1.8" />
           <circle cx="606" cy="15" r="1.8" />
@@ -164,7 +164,7 @@ function Box({ beam }) {
         <path d="M60 27V112M112 27V112M164 27V112M216 27V112" stroke="rgba(17,17,17,.05)" strokeWidth="2" />
         <rect x="8" y="111" width="262" height="9" fill="#3F5A66" />
         {/* side livery: logo */}
-        <use href="#logo-full" x="83" y="31.7" width="112" height="48.6" fill="#111" />
+        <use href="#logo-full" x="83" y="32" width="112" height="48" fill="#111" />
         <rect x="40" y="84" width="198" height="4" fill="#FF8A3D" />
         <text className="svg-body" x="139" y="103" textAnchor="middle" fontWeight="600" fontSize="10.5" letterSpacing=".6" fill="#517380">Truck dispatch</text>
         <g fill="#FF8A3D">

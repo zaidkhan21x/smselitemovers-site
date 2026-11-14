@@ -1,18 +1,7 @@
 import { SITE, TEL_HREF, MAILTO_HREF } from '@/lib/site';
+import { ORDER, TYPES } from '@/lib/hero-types';
 import { Fragment } from 'react';
 import { CheckIcon } from '@/components/icons';
-
-/* Equipment choices offered in the form. Car hauler is its own choice
-   (Deliverable B) and is dispatched through the hotshot desk, so it
-   drives the hotshot hero without changing what the driver picked.
-   The three ids that match lib/hero-types.js ORDER are kept, because
-   HomeController syncs the hero selector to them. */
-const FORM_EQUIPMENT = [
-  { id: 'hotshot', label: 'Hotshot' },
-  { id: 'car-hauler', label: 'Car hauler' },
-  { id: 'flatbed', label: 'Flatbed' },
-  { id: 'box', label: 'Box truck' },
-];
 
 /* type: the equipment pre-selected in the chips (follows ?type=). */
 export function LeadForm({ type }) {
@@ -21,7 +10,7 @@ export function LeadForm({ type }) {
       <div className="wrap lead-grid">
         <div>
           <h2 className="h2" id="leadTitle">Get dispatched</h2>
-          <p className="lede" style={{ marginTop: '18px' }}>{`Call ${SITE.phoneDisplay} or send the form with your truck, home base and the lanes you like.`}</p>
+          <p className="lede" style={{ marginTop: '18px' }}>Leave your name and number. A dispatcher calls you back to talk through your truck, your lanes and your rates.</p>
           <ol className="next-steps">
             <li><div><strong>We call you back</strong><span>A dispatcher who&apos;ll actually work your truck.</span></div></li>
             <li><div><strong>We set your lanes and rate floor</strong><span>Your rules, written down before we book anything.</span></div></li>
@@ -35,11 +24,10 @@ export function LeadForm({ type }) {
           </div>
         </div>
 
-        {/* Submits to /api/lead, which emails the lead to dispatch and keeps
-            the consent record (checkbox state, the exact disclosure text
-            shown, timestamp, page URL and IP).
-            noValidate: the page script shows its own messages. */}
-        <form className="form" id="leadForm" method="post" action="/api/lead" noValidate>
+        {/* PHASE 3: wire submission (endpoint, consent record with timestamp + disclosure text, spam protection, tracking). UI only for now.
+            method="dialog": outside a <dialog> the browser cancels the submission, so if someone presses
+            submit before the page script has loaded, nothing navigates and no details end up in the URL. */}
+        <form className="form" id="leadForm" method="dialog" noValidate>
           <div className="form-body">
             <div className="form-grid">
               <div className="field">
@@ -52,18 +40,13 @@ export function LeadForm({ type }) {
                 <input className="input" id="f-phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" required />
                 <div className="err" id="e-phone" />
               </div>
-              <div className="field full">
-                <label htmlFor="f-email">Email</label>
-                <input className="input" id="f-email" name="email" type="email" autoComplete="email" inputMode="email" required />
-                <div className="err" id="e-email" />
-              </div>
               <fieldset className="field full">
                 <legend>Equipment</legend>
                 <div className="chips" style={{ marginTop: '7px' }}>
-                  {FORM_EQUIPMENT.map((e) => (
-                    <Fragment key={e.id}>
-                      <input type="radio" name="equipment" id={`fe-${e.id}`} value={e.id} defaultChecked={e.id === type} />
-                      <label htmlFor={`fe-${e.id}`}>{e.label}</label>
+                  {ORDER.map((t) => (
+                    <Fragment key={t}>
+                      <input type="radio" name="equipment" id={`fe-${t}`} value={t} defaultChecked={t === type} />
+                      <label htmlFor={`fe-${t}`}>{TYPES[t].name}</label>
                     </Fragment>
                   ))}
                 </div>
@@ -71,12 +54,6 @@ export function LeadForm({ type }) {
               <div className="field full">
                 <label htmlFor="f-mc">MC number <span className="opt">(optional)</span></label>
                 <input className="input" id="f-mc" name="mc" inputMode="numeric" placeholder="Leave blank if pending" />
-              </div>
-              {/* Spam trap: offscreen and not reachable by keyboard or
-                  screen readers. A filled value means a bot. */}
-              <div className="hp" aria-hidden="true">
-                <label htmlFor="f-company">Company (leave blank)</label>
-                <input id="f-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
               </div>
               <div className="field full">
                 <label className="consent">
@@ -86,15 +63,16 @@ export function LeadForm({ type }) {
               </div>
             </div>
             <div className="form-foot">
-              <button className="btn btn-signal" type="submit" id="leadSubmit">Get dispatched</button>
-              <div className="err form-err" id="e-form" role="alert" />
+              <button className="btn btn-signal" type="submit">Get dispatched</button>
               <small>{`By submitting, you're asking ${SITE.brand} to contact you about dispatch at the number you entered. We don't sell your information. `}<a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.</small>
             </div>
           </div>
           <div className="form-done" role="status">
             <div className="ok" aria-hidden="true"><CheckIcon ariaHidden={false} /></div>
-            <h3 id="doneTitle">Request sent</h3>
+            <h3 id="doneTitle">Request ready</h3>
             <p>A dispatcher will call you back to talk through your lanes and rates. Want to talk now? Call <a href={TEL_HREF} data-call>{SITE.phoneDisplay}</a>.</p>
+            <div className="preview-note">Preview build: this form is not connected yet, so nothing was sent. Submission wiring is scheduled for Phase 3.</div>
+            <div className="cta-row" style={{ marginTop: '20px' }}><button className="btn btn-ghost btn-sm" type="button" id="formReset">Edit details</button></div>
           </div>
         </form>
       </div>
