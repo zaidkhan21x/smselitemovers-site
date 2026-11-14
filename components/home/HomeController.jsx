@@ -326,11 +326,24 @@ export default function HomeController({ initialType, hasVariant }) {
     updateOb();
 
     /* ---------- Lead form ---------- */
+    /* One "@" with something before it, and a dotted domain after it.
+       Deliberately permissive: the server checks too, and the real
+       test is whether a dispatcher can reach the driver. */
+    const looksLikeEmail = (value) => {
+      const v = String(value || '').trim();
+      if (!v || v.split(/\s/).length > 1) return false;
+      const at = v.indexOf('@');
+      if (at < 1 || at !== v.lastIndexOf('@')) return false;
+      const domain = v.slice(at + 1);
+      const dot = domain.lastIndexOf('.');
+      return dot > 0 && domain.length - dot > 2;
+    };
+
     const form = $('#leadForm');
     const rules = {
       name: (v) => v.trim().length >= 2 || 'Enter your full name.',
       phone: (v) => v.replace(/\D/g, '').length >= 10 || 'Enter a 10-digit phone number with area code.',
-      email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Enter an email address we can reach you at.',
+      email: (v) => looksLikeEmail(v) || 'Enter an email address we can reach you at.',
     };
     function check(name) {
       const input = form.elements[name];
