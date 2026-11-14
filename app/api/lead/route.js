@@ -134,7 +134,9 @@ export async function POST(request) {
       text: lines.join('\n'),
     });
   } catch (err) {
-    console.error('[lead] send failed:', err?.message || err);
+    // Write the whole lead to the application log, so a mail outage
+    // costs a slower follow-up rather than the enquiry itself.
+    console.error(`[lead] send failed: ${err?.message || err}\n${lines.join('\n')}`);
     return Response.json({ ok: false, error: 'send_failed' }, { status: 502 });
   }
 
