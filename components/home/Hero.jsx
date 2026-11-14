@@ -108,15 +108,21 @@ export function Hero({ variant }) {
         </div>
 
         <div className="hero-copy">
+          <p className="hero-eyebrow ti-swap" id="heroEyebrow">{copy.eyebrow}</p>
           <h1 className="display hero-h1 ti-swap" id="heroTitle"><Lines lines={copy.h1} /></h1>
           <p className="lede ti-swap" id="heroLede">{copy.lede}</p>
           <div className="cta-row hero-ctas">
-            <a className="btn btn-signal" href="#contact" id="heroCta">Get dispatched</a>
+            <a className="btn btn-signal" href="#contact" id="heroCta">{variant ? d.cta : DEFAULT_HERO.cta}</a>
             <a className="btn btn-ghost" href={TEL_HREF} data-call>
               <PhoneIcon />
-              <span>{SITE.phoneDisplay}</span>
+              {/* "Call" is dropped on narrow screens, where the button is
+                  half the width and the number alone has to fit. */}
+              <span><span className="call-word">Call </span>{SITE.phoneDisplay}</span>
             </a>
           </div>
+          <ul className="hero-trust ti-swap" id="heroTrust">
+            {copy.trust.map((t) => <li key={t}>{t}</li>)}
+          </ul>
         </div>
 
         <aside className="truck-info" aria-live="polite">

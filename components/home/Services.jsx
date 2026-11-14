@@ -63,7 +63,7 @@ const SERVICES = [
   {
     icon: 'dispatch',
     title: 'Truck Dispatch',
-    body: 'One dispatcher who learns your truck, your lanes and how you like to run. Load offers come to you, you pick, and we handle the booking from rate con to delivery.',
+    body: 'Load offers come to you. We handle booking, rate confirmations and check calls.',
     points: [
       'Every offer shows rate, loaded miles, deadhead and pickup and delivery windows',
       'Booking, rate confirmations and check calls handled for you',
@@ -74,7 +74,7 @@ const SERVICES = [
   {
     icon: 'route',
     title: 'Load Search & Route Planning',
-    body: 'We search the load boards and work your broker and shipper relationships for freight that fits your equipment, then plan the week so the miles connect instead of dead-ending.',
+    body: 'Multi-stop plans that cut deadhead, routes built around your hours of service, and backhauls checked before you leave.',
     points: [
       'Multi-stop plans built to cut deadhead between loads',
       'Routes planned around your hours of service and home time',
@@ -85,7 +85,7 @@ const SERVICES = [
   {
     icon: 'rate',
     title: 'Rate Negotiation',
-    body: "We counter low offers with current lane data and walk away from freight that doesn't clear your floor. Every load gets pushed, not just the big ones.",
+    body: 'Rates checked against current lane data, accessorials requested up front, and low offers declined.',
     points: [
       'Rates checked against what the lane is paying right now before we counter',
       'Accessorials asked for up front: detention, layover, tarps, extra stops, TONU',
@@ -96,7 +96,7 @@ const SERVICES = [
   {
     icon: 'comms',
     title: 'Broker & Shipper Communication',
-    body: 'Check calls, appointment changes, detention clocks and paperwork follow-ups. We take the calls so you keep your eyes on the road and your hours on driving.',
+    body: 'Status updates sent for you, detention and layover documented, and problems escalated.',
     points: [
       'Status updates to brokers and shippers on your behalf',
       'Detention and layover documented and claimed',
@@ -107,7 +107,7 @@ const SERVICES = [
   {
     icon: 'office',
     title: 'Back Office Support',
-    body: "Rate cons, BOLs, invoices and carrier setup packets, kept organized and sent on time, so getting paid doesn't depend on you chasing paper from a truck stop.",
+    body: 'Setup packets, invoices, PODs and your documents kept organized.',
     points: [
       'Broker and shipper setup packets completed with you',
       'Invoices and PODs sent as soon as you deliver',
@@ -118,7 +118,7 @@ const SERVICES = [
   {
     icon: 'strategy',
     title: 'Freight Strategy',
-    body: 'We look at your cost per mile, your lanes and the season ahead, then build a plan for steadier weeks instead of feast-or-famine.',
+    body: 'Cost-per-mile and break-even numbers, lane choices and a plan for the slow season.',
     points: [
       'Cost per mile and break-even rate worked out with you',
       'Lane choices based on what pays and what gets you home',
@@ -129,7 +129,7 @@ const SERVICES = [
   {
     icon: 'factoring',
     title: 'Factoring & Payment Support',
-    body: "Cash flow keeps the truck running. We help you set up factoring, get loads submitted for payment and follow up on anything that's late.",
+    body: 'Help choosing a factoring company, submitting paperwork and following up on late payments.',
     points: [
       'Help choosing and setting up a factoring company',
       "Load paperwork submitted so funding isn't held up",
@@ -140,7 +140,7 @@ const SERVICES = [
   {
     icon: 'newmc',
     title: 'New MC Support',
-    body: "Fresh authority? Plenty of brokers won't load a new MC. We go after the ones who will and build your history with clean loads from the start.",
+    body: 'Brokers that work with new authorities, setup packets, and early loads that build your history.',
     points: [
       'Brokers that work with new authorities, contacted for you',
       'Setup packets and certificates of insurance handled',
@@ -155,8 +155,8 @@ export function Services() {
     <section className="sec light" id="services" aria-labelledby="servicesTitle">
       <div className="wrap">
         <div className="sec-head">
-          <h2 className="h2" id="servicesTitle">We work the phones.<br />You drive.</h2>
-          <p className="lede">Eight truck dispatch services from one team. Start with what you need today and add the rest as your operation grows.</p>
+          <h2 className="h2" id="servicesTitle">Truck dispatching services for<br />owner-operators and small carriers</h2>
+          <p className="lede">One dispatcher handles the load board, the brokers and the paperwork, so you can keep driving.</p>
         </div>
 
         <div className="svc">

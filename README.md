@@ -1,4 +1,4 @@
-# smselitemovers website (Next.js)
+# SMS Elite Mover website (Next.js)
 
 The Phase 2 truck dispatch site converted to Next.js (App Router), statically
 generated, ready for Hostinger's Node.js web app hosting (Business or Cloud
@@ -34,11 +34,11 @@ plan, Node 22).
 
 | Placeholder | Where | Now set to |
 |---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | `.env.local` and Hostinger env vars | `https://smselitemovers.com` |
+| `NEXT_PUBLIC_SITE_URL` | `.env.local` and Hostinger env vars | `https://smselitemover.com` |
 | `NEXT_TELEMETRY_DISABLED` | `.env.local` and Hostinger env vars | `1` (keep) |
 
 If `NEXT_PUBLIC_SITE_URL` is missing or invalid, the site uses
-`https://smselitemovers.com` (set in `lib/site.js`). It is read at build time,
+`https://smselitemover.com` (set in `lib/site.js`). It is read at build time,
 so redeploy after changing it.
 
 ### Replacing the logo later
@@ -83,7 +83,7 @@ optimisation (this site does not use it).
 4. Every call button dials +1 (405) 666-0397.
 5. `curl -I http://localhost:3000/` shows the security headers and no
    `X-Powered-By`.
-6. `/robots.txt` and `/sitemap.xml` use `https://smselitemovers.com`.
+6. `/robots.txt` and `/sitemap.xml` use `https://smselitemover.com`.
 7. Run Lighthouse (Chrome DevTools, mobile and desktop) or
    PageSpeed Insights after it is live.
 
@@ -100,9 +100,9 @@ upload limit is not stated on those pages; Hostinger's API reference lists
 50 MB for archive uploads. This project zip is far below that.
 
 1. hPanel → **Websites** → **Add Website** → **Node.js web app**
-   (if `smselitemovers.com` is already a site on the plan, Hostinger asks you
+   (if `smselitemover.com` is already a site on the plan, Hostinger asks you
    to remove it first, because the deploy needs a fresh slot for the domain).
-2. Choose **Upload your website files** and upload `smselitemovers.zip`
+2. Choose **Upload your website files** and upload `smselitemover.zip`
    (or your re-zipped folder that includes `package-lock.json`, see below).
 3. Check the detected settings:
    - Framework / application type: **Next.js**
@@ -113,16 +113,16 @@ upload limit is not stated on those pages; Hostinger's API reference lists
    - Package manager: **npm**
    - Entry file: leave empty (ignored for Next.js)
 4. **Environment variables**: add
-   - `NEXT_PUBLIC_SITE_URL` = `https://smselitemovers.com`
+   - `NEXT_PUBLIC_SITE_URL` = `https://smselitemover.com`
    - `NEXT_TELEMETRY_DISABLED` = `1`
 5. Click **Deploy** and wait for the build to finish (the install and the
    build each have a 15-minute limit).
-6. Connect the domain `smselitemovers.com` to the app and make sure SSL is
+6. Connect the domain `smselitemover.com` to the app and make sure SSL is
    active, then run the test checklist above against the live site,
    including step 2 (if a CDN in front of the site ever serves the wrong
    headline for a `?type=` URL, purge the CDN cache and make sure it keys on
    the query string).
-7. Submit `https://smselitemovers.com/sitemap.xml` in Google Search Console.
+7. Submit `https://smselitemover.com/sitemap.xml` in Google Search Console.
 
 ### Lockfile (recommended)
 
@@ -135,7 +135,7 @@ newest matching versions at install time. To lock everything:
 npm install
 npm audit
 # zip the folder WITHOUT node_modules, .next and .git:
-zip -r smselitemovers.zip . -x "node_modules/*" ".next/*" ".git/*"
+zip -r smselitemover.zip . -x "node_modules/*" ".next/*" ".git/*"
 ```
 
 and upload that zip instead. Hostinger detects npm from `package-lock.json`.

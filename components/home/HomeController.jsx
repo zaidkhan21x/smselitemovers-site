@@ -149,12 +149,22 @@ export default function HomeController({ initialType, hasVariant }) {
     /* hero copy + info card */
     const tiSwap = $('#tiSwap'), tiName = $('#tiName'), tiSpec = $('#tiSpec'), tiLoads = $('#tiLoads'), tiCta = $('#tiCta'), dockInfo = $('#dockInfo');
     const heroTitle = $('#heroTitle'), heroLede = $('#heroLede');
+    const heroEyebrow = $('#heroEyebrow'), heroTrust = $('#heroTrust'), heroCta = $('#heroCta');
     let swapTimer;
     function setHeroCopy(copy) {
       const nodes = [];
       copy.h1.forEach((line, i) => { if (i) nodes.push(document.createElement('br')); nodes.push(document.createTextNode(line)); });
       heroTitle.replaceChildren(...nodes);
       heroLede.textContent = copy.lede;
+      if (heroEyebrow) heroEyebrow.textContent = copy.eyebrow;
+      if (heroCta && copy.cta) heroCta.textContent = copy.cta;
+      if (heroTrust && copy.trust) {
+        heroTrust.replaceChildren(...copy.trust.map((t) => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          return li;
+        }));
+      }
     }
     function updateInfo(type, instant, keepDefault) {
       const d = TYPES[type];
@@ -164,7 +174,7 @@ export default function HomeController({ initialType, hasVariant }) {
         tiName.textContent = d.name; tiSpec.textContent = d.spec; tiLoads.textContent = d.loads;
         if (!keepDefault) setHeroCopy(d);
       };
-      const swaps = keepDefault ? [tiSwap] : [tiSwap, heroTitle, heroLede];
+      const swaps = keepDefault ? [tiSwap] : [tiSwap, heroTitle, heroLede, heroEyebrow, heroTrust].filter(Boolean);
       if (instant || reduceMotion) { apply(); return; }
       swaps.forEach((el) => el.classList.add('is-swapping'));
       cancel(swapTimer);
@@ -182,16 +192,24 @@ export default function HomeController({ initialType, hasVariant }) {
     }
 
     const pill = $('#selPill');
+    /* The lead form offers "Car hauler" as its own choice; it is dispatched
+       through the hotshot desk, so it drives the hotshot hero and truck
+       while the driver's own answer stays selected in the form. */
+    const heroTypeOf = (value) => (ORDER.includes(value) ? value : value === 'car-hauler' ? 'hotshot' : null);
     function select(type, opts = {}) {
+      if (!ORDER.includes(type)) return;
       $(`#he-${type}`).checked = true;
-      $(`#fe-${type}`).checked = true;
+      if (opts.syncForm !== false) { const r = $(`#fe-${type}`); if (r) r.checked = true; }
       pill.style.transform = `translateX(${ORDER.indexOf(type) * 100}%)`;
       showHeroTruck(type, opts.instant || (!opts.initial && !heroVisible()), opts.initial);
       updateInfo(type, opts.initial, opts.keepDefault);
       setObTruck(type);
     }
     $$('input[name="heroEquip"]').forEach((r) => on(r, 'change', () => select(r.value)));
-    $$('input[name="equipment"]').forEach((r) => on(r, 'change', () => select(r.value)));
+    $$('input[name="equipment"]').forEach((r) => on(r, 'change', () => {
+      const t = heroTypeOf(r.value);
+      if (t) select(t, { syncForm: false });
+    }));
     on(document, 'click', (e) => { const a = e.target.closest('[data-pick]'); if (a) select(a.dataset.pick); });
 
     /* mobile: road scene ends right under the equipment selector */
@@ -307,11 +325,12 @@ export default function HomeController({ initialType, hasVariant }) {
     }
     updateOb();
 
-    /* ---------- Lead form (UI only, Phase 3 wires submission) ---------- */
+    /* ---------- Lead form ---------- */
     const form = $('#leadForm');
     const rules = {
       name: (v) => v.trim().length >= 2 || 'Enter your full name.',
       phone: (v) => v.replace(/\D/g, '').length >= 10 || 'Enter a 10-digit phone number with area code.',
+      email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Enter an email address we can reach you at.',
     };
     function check(name) {
       const input = form.elements[name];
@@ -323,19 +342,45 @@ export default function HomeController({ initialType, hasVariant }) {
     }
     Object.keys(rules).forEach((n) => on(form.elements[n], 'blur', () => { if (form.elements[n].value) check(n); }));
     Object.keys(rules).forEach((n) => on(form.elements[n], 'input', () => { if (form.elements[n].closest('.field').classList.contains('has-error')) check(n); }));
-    on(form, 'submit', (e) => {
+    const submitBtn = $('#leadSubmit');
+    const formErr = $('#e-form');
+    /* The exact consent wording shown to this visitor, stored with the lead
+       so the consent record matches what was on screen. */
+    const consentText = () => ($('.consent span', form)?.textContent || '').replace(/\s+/g, ' ').trim();
+    let sending = false;
+
+    on(form, 'submit', async (e) => {
       e.preventDefault();
+      if (sending) return;
+      formErr.textContent = '';
       let firstBad = null;
       Object.keys(rules).forEach((n) => { if (!check(n) && !firstBad) firstBad = form.elements[n]; });
       if (firstBad) { firstBad.focus(); return; }
-      // PHASE 3: send new FormData(form) to the lead endpoint, and store the consent checkbox state,
-      // the exact disclosure text shown, timestamp, page URL and IP as the consent record.
-      const first = form.elements.name.value.trim().split(/\s+/)[0];
-      $('#doneTitle').textContent = `Thanks, ${first}`;
-      form.classList.add('is-done');
-      const done = $('.form-done', form); done.setAttribute('tabindex', '-1'); done.focus();
+
+      const body = new FormData(form);
+      body.set('consent', form.elements.consent.checked ? 'yes' : 'no');
+      body.set('consentText', consentText());
+      body.set('pageUrl', window.location.href);
+
+      sending = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      try {
+        const res = await fetch('/api/lead', { method: 'POST', body });
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const first = form.elements.name.value.trim().split(/\s+/)[0];
+        $('#doneTitle').textContent = `Thanks, ${first}`;
+        form.classList.add('is-done');
+        const done = $('.form-done', form);
+        done.setAttribute('tabindex', '-1');
+        done.focus();
+      } catch {
+        formErr.textContent = 'That didn’t send. Please try again, or call us and we’ll take your details over the phone.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Get dispatched';
+        sending = false;
+      }
     });
-    on($('#formReset'), 'click', () => { form.classList.remove('is-done'); form.elements.name.focus(); });
 
     return () => {
       ac.abort();

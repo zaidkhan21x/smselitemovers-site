@@ -1,5 +1,5 @@
 /* =========================================================
-   smselitemovers homepage
+   SMS Elite Mover homepage
    Tokens
    ========================================================= */
 :root{
@@ -58,7 +58,7 @@ h1,h2,h3,p{margin:0}
 .nav{pointer-events:auto;max-width:calc(var(--wrap) - 16px);margin:0 auto;display:flex;align-items:center;gap:16px;height:64px;padding:0 10px 0 18px;border-radius:16px;border:1px solid transparent;transition:background-color 240ms ease,border-color 240ms ease,backdrop-filter 240ms ease;margin-top:12px}
 .site-header.is-scrolled .nav{background:rgba(17,17,17,.82);border-color:var(--line);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
-.brand-logo{height:40px;width:auto;aspect-ratio:915/392;color:var(--text)}
+.brand-logo{height:46px;width:auto;aspect-ratio:1000/433.6;color:var(--text)}
 .nav-links{display:flex;gap:4px;margin:0 auto;padding:4px;border-radius:12px;background:rgba(9,9,9,.35);border:1px solid var(--line)}
 .nav-links a{padding:8px 14px;border-radius:9px;text-decoration:none;font-size:15px;font-weight:500;color:var(--text-2);transition:color 150ms ease,background-color 150ms ease}
 @media (hover:hover) and (pointer:fine){.nav-links a:hover{color:var(--text);background:rgba(242,237,234,.07)}}
@@ -127,6 +127,10 @@ h1,h2,h3,p{margin:0}
 @media (min-width:701px){.hero-copy h1{white-space:nowrap}}
 .hero-copy .lede{margin-top:22px;color:rgba(242,237,234,.82);max-width:48ch}
 .hero-copy .cta-row{margin-top:30px}
+.hero-eyebrow{margin:0 0 14px;font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--signal)}
+.hero-trust{margin:24px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:14.5px;color:var(--text-2)}
+.hero-trust li{display:flex;align-items:center;gap:14px}
+.hero-trust li+li::before{content:"·";color:var(--text-3);font-weight:700}
 
 .truck-info{position:absolute;z-index:3;top:clamp(108px,13vh,140px);right:clamp(20px,3vw,40px);width:300px;padding:18px 18px 16px;border-radius:18px;background:rgba(9,9,9,.42);border:1px solid rgba(242,237,234,.14);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .truck-info .ti-name{font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;line-height:1}
@@ -375,7 +379,11 @@ select.input{appearance:none;-webkit-appearance:none;background-image:url("data:
 .err{font-size:14px;color:#f08b7b;min-height:0}
 .err:empty{display:none}
 fieldset.field{border:0;padding:0;margin:0}
-.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chips{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+/* Spam trap: off screen, not focusable, not announced. */
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.form-err{flex:1 1 100%;order:3;min-height:0}
+.form-err:empty{display:none}
 .chips input{position:absolute;opacity:0;pointer-events:none}
 .chips label{height:52px;border-radius:11px;border:1px solid rgba(242,237,234,.14);background:var(--ink-2);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;cursor:pointer;transition:background-color 150ms ease,color 150ms ease,border-color 150ms ease,transform 120ms var(--ease-out)}
 .chips label:active{transform:scale(.97)}
@@ -415,7 +423,7 @@ fieldset.field{border:0;padding:0;margin:0}
 .foot-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .foot-grid a{text-decoration:none;color:var(--text-2)}
 @media (hover:hover) and (pointer:fine){.foot-grid a:hover{color:var(--text)}}
-.foot-grid .brand-logo{height:52px}
+.foot-grid .brand-logo{height:64px}
 .foot-blurb{margin-top:14px;color:var(--text-2);max-width:36ch}
 .foot-bottom{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--text-3);font-size:14px}
 
@@ -464,19 +472,24 @@ fieldset.field{border:0;padding:0;margin:0}
   body{font-size:16px}
   .site-header{inset:6px 6px auto 6px}
   .nav{height:58px;margin-top:6px;padding-left:12px}
-  .brand-logo{height:36px}
+  .brand-logo{height:40px}
   .nav-actions .btn-signal{display:none}
   .hero{padding:6px}
   .hero-panel{height:auto;min-height:0;border-radius:22px;padding-bottom:0;display:flex;flex-direction:column}
   .hero-panel{background:#0d1418}
   .hero-copy{display:contents}
-  .hero-copy h1{order:1;position:relative;z-index:3;padding:88px 18px 0;font-size:clamp(36px,10.6vw,56px);line-height:.9}
+  .hero-eyebrow{order:0;position:relative;z-index:3;padding:84px 18px 0;margin:0;font-size:12px}
+  .hero-copy h1{order:1;position:relative;z-index:3;padding:8px 18px 0;font-size:clamp(36px,10.6vw,56px);line-height:.9}
   .hero-dock{order:2}
   .scene-spacer{order:3;display:block;height:250px}
   .hero-copy .lede{order:4;position:relative;z-index:3;font-size:15.5px;line-height:1.5;margin:6px 0 0;padding:0 18px}
   .hero-copy .cta-row{order:5;position:relative;z-index:3;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 0;padding:0 18px 22px}
   .hero-copy .cta-row .btn{padding:0 10px;font-size:15px;height:48px}
-  .truck-info{order:6}
+  .hero-copy .cta-row{padding-bottom:0}
+  .call-word{display:none}
+  .hero-trust{order:6;position:relative;z-index:3;margin:14px 0 0;padding:0 18px 22px;font-size:13.5px;gap:4px 10px}
+  .hero-trust li{gap:10px}
+  .truck-info{order:7}
   .scene{bottom:auto;height:var(--scene-h,620px)}
   .nav-actions .btn-ghost{display:inline-flex;width:44px;height:44px;padding:0}
   .nav-actions .btn-ghost span{display:none}

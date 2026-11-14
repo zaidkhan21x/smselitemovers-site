@@ -12,14 +12,14 @@ export function Offers() {
               <a className="btn btn-signal" href="#contact">Talk to a dispatcher</a>
             </div>
           </div>
-          <p className="lede">Most truck dispatch is built to keep the wheels turning at any price. Ours is built around what you clear at the end of the week, your hours and your home time. A carrier who isn&apos;t worn out is a carrier who stays.</p>
+          <p className="lede">A truck dispatcher should work for the person who owns the truck. Here&apos;s how SMS Elite Mover does it.</p>
         </div>
 
         <div className="bento">
           <article className="card c-forced" id="offerCard">
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <h3 className="h3">Zero forced dispatch</h3>
-              <p>Every load comes to you as an offer: rate, loaded miles, deadhead, pickup and delivery windows, and anything extra like tarps or a liftgate. You say yes or no. Pass on one and nothing changes between us. No penalties, no attitude, no getting buried in leftovers.</p>
+              <p>Every load reaches you as an offer: rate, loaded miles, deadhead, pickup and delivery windows, and extras like tarps or liftgates. Say yes or pass. Passing never counts against you.</p>
               <div className="card-foot"><a className="btn btn-ghost btn-sm" href="#contact">Start on your terms</a></div>
             </div>
             <div className="offer-demo">
@@ -46,8 +46,8 @@ export function Offers() {
           </article>
 
           <article className="card c-prebook" id="prebookCard">
-            <h3 className="h3">Your next load, lined up before you deliver</h3>
-            <p>While you&apos;re rolling, we&apos;re working on the reload, so the next pickup is booked before you unload. Once it&apos;s booked, ask for the rate confirmation and we&apos;ll send it, so you can see it&apos;s real.</p>
+            <h3 className="h3">Next load lined up</h3>
+            <p>We work your reload while you&apos;re rolling, so you aren&apos;t sitting empty after you unload. Once it&apos;s booked, ask for the rate confirmation and check it yourself.</p>
             <div className="track" aria-hidden="true">
               <div className="next-load">
                 <CheckIcon ariaHidden={false} />
@@ -61,7 +61,7 @@ export function Offers() {
 
           <article className="card c-quality">
             <h3 className="h3">Quality loads only</h3>
-            <p>We screen freight before it ever reaches your phone.</p>
+            <p>Freight is screened before it reaches you. Rates below your floor, brokers with a slow-pay history and loads that would break your hours don&apos;t make it through.</p>
             <ul className="filters">
               <li className="no"><CrossIcon /><span>Rates under your floor</span></li>
               <li className="no"><CrossIcon /><span>Brokers with slow-pay history</span></li>
@@ -73,7 +73,7 @@ export function Offers() {
           <article className="card c-dedicated">
             <div>
               <h3 className="h3">Enterprise and dedicated loads</h3>
-              <p>Steady contract freight with shippers on repeat lanes, set up in your company&apos;s name. Predictable miles, solid pay and home time you can plan, without running yourself into the ground.</p>
+              <p>Steady contract freight with shippers on repeat lanes, set up in your company&apos;s name: consistent miles, solid pay and home time you can plan.</p>
               <div className="card-foot"><a className="btn btn-dark btn-sm" href="#contact">Ask about dedicated lanes</a></div>
             </div>
             <div className="loop" aria-hidden="true">
@@ -91,7 +91,7 @@ export function Offers() {
           <article className="card c-onboard">
             <div>
               <h3 className="h3">Onboarding done with you, not to you</h3>
-              <p>Broker packets, documents and your lane rules, set up together one step at a time.</p>
+              <p>We set your rules with you, step by step, before the first load is booked.</p>
             </div>
             <div className="card-foot"><a className="btn btn-dark" href="#onboarding">See how onboarding works</a></div>
           </article>

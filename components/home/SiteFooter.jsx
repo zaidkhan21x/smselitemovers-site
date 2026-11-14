@@ -1,6 +1,9 @@
 import { SITE, TEL_HREF, MAILTO_HREF } from '@/lib/site';
 import { Logo } from '@/components/Logo';
 
+/* Footer copy from "SMS Elite Mover — Website Copy & SEO (Deliverable B)".
+   The dispatch links are real <a href> links to the ?type= URLs and the
+   in-page anchors, because Google needs crawlable links. */
 export function SiteFooter() {
   const year = new Date().getFullYear(); // build year; the page script updates it in the browser
   return (
@@ -10,7 +13,7 @@ export function SiteFooter() {
           <div className="foot-grid">
             <div>
               <a className="brand" href="#top"><Logo className="brand-logo" /><span className="sr-only">{SITE.brand}</span></a>
-              <p className="foot-blurb">Truck dispatch services for hotshot, flatbed and box truck owner-operators and small carriers. You drive. We work the phones.</p>
+              <p className="foot-blurb">Truck dispatch service for owner-operators running hotshot, car hauler, flatbed and box trucks.</p>
               <a className="btn btn-signal btn-sm" href="#contact" style={{ marginTop: '18px' }}>Get dispatched</a>
             </div>
             <div>
@@ -19,7 +22,7 @@ export function SiteFooter() {
                 <li><a href="/?type=hotshot#top">Hotshot dispatch</a></li>
                 <li><a href="/?type=flatbed#top">Flatbed dispatch</a></li>
                 <li><a href="/?type=box-truck#top">Box truck dispatch</a></li>
-                <li><a href="#services">All services</a></li>
+                <li><a href="#services">Services</a></li>
               </ul>
             </div>
             <div>
@@ -30,6 +33,7 @@ export function SiteFooter() {
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="/privacy">Privacy Policy</a></li>
                 <li><a href="/terms">Terms</a></li>
+                <li><a href="/terms#sms">SMS Terms</a></li>
               </ul>
             </div>
             <div>
@@ -40,7 +44,7 @@ export function SiteFooter() {
               </ul>
             </div>
           </div>
-          <p className="foot-disclaimer">{`${SITE.brand} provides truck dispatch services to motor carriers. We are not a motor carrier and do not haul freight. Loads, rates, miles and earnings depend on market conditions and your choices, and are not guaranteed.`}</p>
+          <p className="foot-disclaimer">{`${SITE.brand} provides truck dispatch services to motor carriers. We are not a motor carrier and do not haul freight. Loads, rates and earnings are not guaranteed.`}</p>
           <div className="foot-bottom">
             <span>© <span id="year">{year}</span>{` ${SITE.brand}. All rights reserved.`}</span>
             <span><a href="/privacy">Privacy Policy</a> <a href="/terms">Terms</a> <a href="/terms#sms">SMS Terms</a></span>
