@@ -87,6 +87,16 @@ export async function POST(request) {
   const consentText = clean(form.get('consentText'), 2000);
   const pageUrl = clean(form.get('pageUrl'), 500);
 
+  // Google Ads click id and landing details, when the visitor arrived
+  // from an ad. Empty for organic, direct and referral traffic.
+  const gclid = clean(form.get('gclid'), 200);
+  const gbraid = clean(form.get('gbraid'), 200);
+  const wbraid = clean(form.get('wbraid'), 200);
+  const landingPage = clean(form.get('landingPage'), 500);
+  const adReferrer = clean(form.get('adReferrer'), 500);
+  const clickedAt = clean(form.get('clickedAt'), 40);
+  const clickId = gclid || gbraid || wbraid;
+
   if (name.length < 2 || phone.replace(/\D/g, '').length < 10 || !isEmail(email)) {
     return Response.json({ ok: false, error: 'validation' }, { status: 422 });
   }
@@ -104,6 +114,20 @@ export async function POST(request) {
     `Email:      ${email}`,
     `Equipment:  ${equipment}`,
     `MC number:  ${mc || 'Not given'}`,
+    '',
+    '--- Where this lead came from ---',
+    clickId
+      ? [
+          `Google Ads click:  ${clickId}${gclid ? '' : gbraid ? '  (gbraid)' : '  (wbraid)'}`,
+          `Clicked the ad:    ${clickedAt || 'unknown'}`,
+          `Landed on:         ${landingPage || 'unknown'}`,
+          'Paste the click id into Google Ads > Campaigns > search to find the',
+          'campaign, ad group and keyword that produced this lead.',
+        ].join('\n')
+      : [
+          'Not from a Google Ads click.',
+          adReferrer ? `Referrer: ${adReferrer}` : 'No referrer recorded.',
+        ].join('\n'),
     '',
     '--- Consent record ---',
     `Marketing consent checkbox: ${consent ? 'TICKED' : 'not ticked'}`,
@@ -130,7 +154,7 @@ export async function POST(request) {
       from: `"${SITE.brand} website" <${SMTP_USER}>`,
       to: LEAD_TO || SMTP_USER,
       replyTo: `"${name}" <${email}>`,
-      subject: `New dispatch lead: ${name} — ${equipment}`,
+      subject: `New dispatch lead: ${name} — ${equipment}${clickId ? ' [Google Ads]' : ''}`,
       text: lines.join('\n'),
     });
   } catch (err) {

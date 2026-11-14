@@ -14,6 +14,7 @@
 import { useEffect } from 'react';
 import { TYPES, ORDER, typeFromQuery, shadowScale } from '@/lib/hero-types';
 import { ADS_ID, ADS_CONVERSIONS } from '@/lib/analytics';
+import { captureAttribution, attachAttribution } from '@/lib/attribution';
 
 export default function HomeController({ initialType, hasVariant }) {
   useEffect(() => {
@@ -336,6 +337,10 @@ export default function HomeController({ initialType, hasVariant }) {
     }
     updateOb();
 
+    /* The ad click id is only on the URL of the landing page, so it is
+       stored on arrival and attached when the form is sent. */
+    captureAttribution();
+
     /* Sends one GA4 event and, once the Google Ads ids are filled in
        (lib/analytics.js), the matching Google Ads conversion. Safe to
        call before gtag has loaded: the calls queue on dataLayer and
@@ -406,6 +411,7 @@ export default function HomeController({ initialType, hasVariant }) {
       if (firstBad) { firstBad.focus(); return; }
 
       const body = new FormData(form);
+      attachAttribution(body);
       body.set('consent', form.elements.consent.checked ? 'yes' : 'no');
       body.set('consentText', consentText());
       body.set('pageUrl', window.location.href);
