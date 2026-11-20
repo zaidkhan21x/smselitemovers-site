@@ -222,7 +222,7 @@ export default function HomeController({ initialType, hasVariant }) {
        and the sticky mobile bar. */
     on(document, 'click', (e) => {
       if (e.target.closest('[data-call]')) {
-        track('contact', { method: 'phone' }, ADS_CONVERSIONS.call);
+        track('contact', { method: 'phone', offer: document.getElementById('f-offer')?.value || 'none' }, ADS_CONVERSIONS.call);
       }
     });
 
@@ -500,7 +500,7 @@ export default function HomeController({ initialType, hasVariant }) {
         if (!res.ok) throw new Error(`status ${res.status}`);
         // Only counted once the lead has actually been delivered, so a
         // failed send is never reported to Google Ads as a lead.
-        track('generate_lead', { equipment: body.get('equipment') || 'unknown' }, ADS_CONVERSIONS.lead);
+        track('generate_lead', { equipment: body.get('equipment') || 'unknown', offer: body.get('offer') || 'none' }, ADS_CONVERSIONS.lead);
         const first = form.elements.name.value.trim().split(/\s+/)[0];
         $('#doneTitle').textContent = `Thanks, ${first}`;
         form.classList.add('is-done');
