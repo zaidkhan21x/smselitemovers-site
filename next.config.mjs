@@ -71,9 +71,25 @@ const securityHeaders = [
    headline, truck and selector are right in the first HTML. The browser
    keeps showing /?type=... Matching ignores letter case and surrounding
    spaces, like the page script does. Keep in sync with TYPE_ALIASES in
-   lib/hero-types.js. */
+   lib/hero-types.js.
+
+   ?offer= ad URLs work the same way: /?offer=<slug> is served the
+   pre-rendered page from /o/<slug>, and /?type=<type>&offer=<slug>
+   (either order) the one from /v/<type>/o/<slug>, so the hero sub-line
+   is locked to that offer in the first HTML. Keep OFFER_SLUGS in sync
+   with lib/offers.js. Combined rules come first: a rewrite that matches
+   moves the request off "/", so the later rules no longer apply. */
 const anyCase = (word) => word.replace(/[a-z]/g, (c) => `[${c}${c.toUpperCase()}]`);
 const typeValue = (...words) => `\\s*(?:${words.map(anyCase).join('|')})\\s*`;
+
+const TYPE_QUERY = [
+  ['hotshot', ['hotshot']],
+  ['flatbed', ['flatbed']],
+  ['box', ['box-truck', 'boxtruck', 'box']],
+];
+const OFFER_SLUGS = ['same-day-payout', 'fuel-advance', 'free-first-load', 'routine-rewards', 'referral'];
+const typeHas = (words) => ({ type: 'query', key: 'type', value: typeValue(...words) });
+const offerHas = (slug) => ({ type: 'query', key: 'offer', value: typeValue(slug) });
 
 const nextConfig = {
   output: 'standalone',
@@ -96,9 +112,16 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
+        // ?type= and ?offer= together
+        ...TYPE_QUERY.flatMap(([variant, words]) => OFFER_SLUGS.map((slug) => (
+          { source: '/', has: [typeHas(words), offerHas(slug)], destination: `/v/${variant}/o/${slug}` }
+        ))),
+        // ?type= only
         { source: '/', has: [{ type: 'query', key: 'type', value: typeValue('hotshot') }], destination: '/v/hotshot' },
         { source: '/', has: [{ type: 'query', key: 'type', value: typeValue('flatbed') }], destination: '/v/flatbed' },
         { source: '/', has: [{ type: 'query', key: 'type', value: typeValue('box-truck', 'boxtruck', 'box') }], destination: '/v/box' },
+        // ?offer= only
+        ...OFFER_SLUGS.map((slug) => ({ source: '/', has: [offerHas(slug)], destination: `/o/${slug}` })),
       ],
     };
   },

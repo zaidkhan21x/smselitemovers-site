@@ -3,7 +3,8 @@
 /* =========================================================
    Homepage behaviour: header, menu, equipment selector and
    truck swap, offer demo, service tabs, onboarding scroll
-   road, ?type= fallback, the lead form and measurement.
+   road, ?type= fallback, the driver-offer rotator and ?offer=,
+   the lead form and measurement.
 
    The page markup is rendered on the server; this component
    renders nothing and wires up the same behaviour the Phase 2
@@ -15,6 +16,7 @@ import { useEffect } from 'react';
 import { TYPES, ORDER, typeFromQuery, shadowScale } from '@/lib/hero-types';
 import { ADS_ID, ADS_CONVERSIONS } from '@/lib/analytics';
 import { captureAttribution, attachAttribution } from '@/lib/attribution';
+import { OFFER_SLUGS, offerFromQuery } from '@/lib/offers';
 
 export default function HomeController({ initialType, hasVariant }) {
   useEffect(() => {
@@ -258,7 +260,9 @@ export default function HomeController({ initialType, hasVariant }) {
       $('#ofRate').textContent = fmt(o.rate); $('#ofMiles').textContent = `${o.miles} mi`;
       $('#ofRpm').textContent = `$${(o.rate / o.miles).toFixed(2)}`;
     }
-    $$('[data-offer]').forEach((b) => on(b, 'click', () => {
+    // Only the Pass / Take it buttons in the demo card. Driver-offer
+    // links elsewhere also carry data-offer (with a slug); see below.
+    $$('#offerBox [data-offer]').forEach((b) => on(b, 'click', () => {
       if (busy) return; busy = true;
       const took = b.dataset.offer === 'take';
       offerNote.textContent = took ? 'Booked. For real loads, the rate con comes to you before you roll.' : 'Passed. No penalty, no pushback. Here is the next one.';
@@ -336,6 +340,62 @@ export default function HomeController({ initialType, hasVariant }) {
       select(fromQuery, { initial: true, keepDefault: false });
     }
     updateOb();
+
+    /* ---------- Driver offers: ?offer=, hero rotator, form field ----------
+       ?offer=<slug> (alone or with ?type=) is normally served a
+       pre-rendered page with the sub-line already locked and the hidden
+       field filled. This also covers anything the server did not match. */
+    let offerFromUrl = null;
+    try { offerFromUrl = offerFromQuery(new URLSearchParams(window.location.search).get('offer')); } catch { /* ignore */ }
+
+    // Hidden "offer" field in the lead form: ?offer= wins; otherwise the
+    // last offer card or CTA the visitor clicked. Sent with the form.
+    const offerInput = $('#f-offer');
+    if (offerInput && offerFromUrl) offerInput.value = offerFromUrl;
+    on(document, 'click', (e) => {
+      const el = e.target.closest('[data-offer]');
+      if (!el || !offerInput || offerFromUrl) return;
+      if (OFFER_SLUGS.includes(el.dataset.offer)) offerInput.value = el.dataset.offer;
+    });
+
+    // Rotating sub-line under the H1: every 4s, paused on hover or focus,
+    // while the hero is off-screen and while the tab is hidden. Locked by
+    // ?offer=; no rotation at all under prefers-reduced-motion.
+    const rotator = $('#heroRotator');
+    if (rotator) {
+      const lines = $$('[data-offer-line]', rotator);
+      let ri = Math.max(0, lines.findIndex((l) => l.classList.contains('is-active')));
+      let rotTimer = 0, hovering = false, focused = false;
+      const showLine = (i) => {
+        if (i === ri) return;
+        const old = lines[ri];
+        old.classList.remove('is-active');
+        old.classList.add('is-leaving');
+        later(() => old.classList.remove('is-leaving'), 500);
+        lines[i].classList.add('is-active');
+        ri = i;
+      };
+      if (offerFromUrl) {
+        rotator.dataset.locked = offerFromUrl;
+        showLine(lines.findIndex((l) => l.dataset.offerLine === offerFromUrl));
+      }
+      const locked = () => Boolean(rotator.dataset.locked);
+      const stop = () => { cancel(rotTimer); rotTimer = 0; };
+      const start = () => {
+        stop();
+        if (locked() || motionQuery.matches || hovering || focused) return;
+        rotTimer = later(() => {
+          if (!document.hidden && !heroPanel.classList.contains('is-offscreen')) showLine((ri + 1) % lines.length);
+          start();
+        }, 4000);
+      };
+      on(rotator, 'mouseenter', () => { hovering = true; stop(); });
+      on(rotator, 'mouseleave', () => { hovering = false; start(); });
+      on(rotator, 'focusin', () => { focused = true; stop(); });
+      on(rotator, 'focusout', () => { focused = false; start(); });
+      on(motionQuery, 'change', () => (motionQuery.matches ? stop() : start()));
+      start();
+    }
 
     /* The ad click id is only on the URL of the landing page, so it is
        stored on arrival and attached when the form is sent. */

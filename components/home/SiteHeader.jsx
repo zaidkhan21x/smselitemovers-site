@@ -10,6 +10,7 @@ export function SiteHeader() {
           <Logo className="brand-logo" />
         </a>
         <div className="nav-links">
+          <a href="#perks">Offers</a>
           <a href="#offers">Why us</a>
           <a href="#services">Services</a>
           <a href="#equipment">Equipment</a>
@@ -28,6 +29,7 @@ export function SiteHeader() {
         </div>
       </nav>
       <div className="mobile-menu" id="mobileMenu">
+        <a className="m-link" href="#perks">Offers</a>
         <a className="m-link" href="#offers">Why us</a>
         <a className="m-link" href="#services">Services</a>
         <a className="m-link" href="#equipment">Equipment</a>

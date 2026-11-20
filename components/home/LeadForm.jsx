@@ -14,8 +14,11 @@ const FORM_EQUIPMENT = [
   { id: 'box', label: 'Box truck' },
 ];
 
-/* type: the equipment pre-selected in the chips (follows ?type=). */
-export function LeadForm({ type }) {
+/* type: the equipment pre-selected in the chips (follows ?type=).
+   offer: the driver-offer slug for ?offer= pages, pre-filled into the
+   hidden "offer" field (the page script also sets it from ?offer= or
+   from the offer card / CTA the visitor clicks). */
+export function LeadForm({ type, offer = null }) {
   return (
     <section className="lead" id="contact" aria-labelledby="leadTitle">
       <div className="wrap lead-grid">
@@ -72,6 +75,8 @@ export function LeadForm({ type }) {
                 <label htmlFor="f-mc">MC number <span className="opt">(optional)</span></label>
                 <input className="input" id="f-mc" name="mc" inputMode="numeric" placeholder="Leave blank if pending" />
               </div>
+              {/* Which driver offer brought this lead in (slug, or empty). */}
+              <input type="hidden" id="f-offer" name="offer" defaultValue={offer || ''} />
               {/* Spam trap: offscreen and not reachable by keyboard or
                   screen readers. A filled value means a bot. */}
               <div className="hp" aria-hidden="true">

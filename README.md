@@ -8,6 +8,11 @@ plan, Node 22).
 - Ad URLs: `/?type=hotshot`, `/?type=flatbed`, `/?type=box-truck`
   (also `boxtruck`, `box`, any letter case). Each is served a pre-rendered
   page with the matching headline, truck and selector already in the HTML.
+- Offer URLs: `/?offer=same-day-payout`, `fuel-advance`, `free-first-load`,
+  `routine-rewards`, `referral`, alone or with `?type=` (e.g.
+  `/?type=flatbed&offer=fuel-advance`). Each is pre-rendered the same way,
+  with the hero sub-line locked to that offer and the form's hidden
+  `offer` field filled in. The offer reaches the lead email as "Offer:".
 - Old URLs `/privacy.html`, `/terms.html`, `/index.html` redirect (308) to
   `/privacy`, `/terms`, `/`.
 - `/robots.txt` and `/sitemap.xml` are generated from the site config.
@@ -24,6 +29,8 @@ plan, Node 22).
 | Logo (header, footer, legal pages, truck livery) | `components/Logo.jsx` |
 | Favicon / share image / schema logo | `public/favicon.svg`, `public/og-image.png`, `public/logo.png` |
 | ?type= headlines and equipment text | `lib/hero-types.js` (keep `next.config.mjs` rewrites in sync) |
+| Driver offers (rotator lines, strip, sections, rewards, ?offer= slugs) | `lib/offers.js` (keep `next.config.mjs` `OFFER_SLUGS` in sync) |
+| Driver offer terms | `app/(legal)/terms/page.jsx` → `#driver-offers` |
 | FAQ (page + schema) | `lib/faq.js` |
 | Page titles, descriptions, share tags | `lib/home-metadata.js`, `app/(legal)/*/page.jsx` |
 | Security headers / CSP | `next.config.mjs` |

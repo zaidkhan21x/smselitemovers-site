@@ -1,5 +1,6 @@
 import * as nodemailerNs from 'nodemailer';
 import { SITE } from '@/lib/site';
+import { offerBySlug } from '@/lib/offers';
 
 /* Works whether the installed nodemailer ships CommonJS (its default
    for 9.x) or an ES module with a default export (10.x and later). */
@@ -86,6 +87,9 @@ export async function POST(request) {
   const consent = clean(form.get('consent'), 10) === 'yes';
   const consentText = clean(form.get('consentText'), 2000);
   const pageUrl = clean(form.get('pageUrl'), 500);
+  // Driver offer the visitor came in on or clicked (hidden form field).
+  // Only the five known slugs are accepted.
+  const offer = offerBySlug(clean(form.get('offer'), 40));
 
   // Google Ads click id and landing details, when the visitor arrived
   // from an ad. Empty for organic, direct and referral traffic.
@@ -114,6 +118,7 @@ export async function POST(request) {
     `Email:      ${email}`,
     `Equipment:  ${equipment}`,
     `MC number:  ${mc || 'Not given'}`,
+    `Offer:      ${offer ? `${offer.name} (${offer.slug})` : 'None'}`,
     '',
     '--- Where this lead came from ---',
     clickId

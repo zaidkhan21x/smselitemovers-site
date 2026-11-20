@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { TEL_HREF, SITE } from '@/lib/site';
 import { TYPES, DEFAULT_HERO, ORDER, DEFAULT_TYPE, shadowScale } from '@/lib/hero-types';
+import { DRIVER_OFFERS } from '@/lib/offers';
 import { Truck } from '@/components/trucks';
 import { PhoneIcon } from '@/components/icons';
 
@@ -26,9 +27,26 @@ function Pattern({ id, width, height, children }) {
   );
 }
 
+/* Rotating driver-offer sub-line under the H1. All five lines are in
+   the HTML; CSS shows one (.is-active) and the page script cycles them
+   every 4s. With ?offer= the matching line is active from the first
+   byte and data-locked stops the rotation. aria-live="off": it is
+   decorative, the offer sections below carry the real content. */
+function OfferRotator({ offer }) {
+  const active = offer || DRIVER_OFFERS[0].slug;
+  return (
+    <ul className="hero-rotator" id="heroRotator" aria-live="off" aria-label="Driver offers" data-locked={offer || undefined}>
+      {DRIVER_OFFERS.map((o) => (
+        <li key={o.slug} data-offer-line={o.slug} className={o.slug === active ? 'is-active' : undefined}>{o.line}</li>
+      ))}
+    </ul>
+  );
+}
+
 /* variant: null for the default page, or 'hotshot' | 'flatbed' | 'box'
-   for the ?type= ad-group pages. */
-export function Hero({ variant }) {
+   for the ?type= ad-group pages.
+   offer: null, or a driver-offer slug for the ?offer= pages. */
+export function Hero({ variant, offer = null }) {
   const type = variant || DEFAULT_TYPE;
   const d = TYPES[type];
   const copy = variant ? d : DEFAULT_HERO;
@@ -110,6 +128,7 @@ export function Hero({ variant }) {
         <div className="hero-copy">
           <p className="hero-eyebrow ti-swap" id="heroEyebrow">{copy.eyebrow}</p>
           <h1 className="display hero-h1 ti-swap" id="heroTitle"><Lines lines={copy.h1} /></h1>
+          <OfferRotator offer={offer} />
           <p className="lede ti-swap" id="heroLede">{copy.lede}</p>
           <div className="cta-row hero-ctas">
             <a className="btn btn-signal" href="#contact" id="heroCta">{variant ? d.cta : DEFAULT_HERO.cta}</a>
