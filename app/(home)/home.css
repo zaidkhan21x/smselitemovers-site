@@ -529,7 +529,7 @@ fieldset.field{border:0;padding:0;margin:0}
 @media (hover:hover) and (pointer:fine){.perk-terms a:hover,.reward-terms:hover{text-decoration-thickness:2px}}
 
 /* ---------- Illustrations (shared card) ---------- */
-.pv{position:relative;padding:20px 22px 24px;border-radius:22px;background:rgba(9,9,9,.4);border:1px solid rgba(242,237,234,.14);box-shadow:0 40px 70px -40px rgba(0,0,0,.75);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.pv{position:relative;padding:20px 22px 24px;border-radius:22px;background:rgba(9,9,9,.4);border:1px solid rgba(242,237,234,.14);box-shadow:0 40px 70px -40px rgba(0,0,0,.75)}
 .is-light .pv{background:var(--dust-hi);border-color:rgba(17,17,17,.08);box-shadow:0 40px 70px -44px rgba(22,48,61,.55)}
 .pv-head{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13.5px;font-weight:600;color:var(--text-2)}
 .pv-tag{padding:3px 8px;border-radius:6px;background:rgba(242,237,234,.1);font-size:12px;font-weight:600;color:var(--text-2)}
