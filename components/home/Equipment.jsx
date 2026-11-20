@@ -7,7 +7,7 @@ const CARDS = [
     label: 'Hotshot pickup truck pulling a gooseneck flatbed trailer with a tarped load',
     title: 'Hotshot dispatch (car haulers included)',
     spec: 'Class 3 to 5 pickups with a gooseneck or bumper-pull trailer, often 40 ft',
-    points: ['Expedited freight, partials and LTL flatbed', 'Reloads planned ahead', 'Car haulers dispatched through our hotshot desk', 'Equipment, machinery and building materials'],
+    points: ['Expedited freight, partials and LTL flatbed', 'Reloads planned ahead', 'Car haulers dispatched through our hotshot desk', 'Equipment, machinery and building materials', 'A fuel advance on qualifying booked loads for the run to pickup'],
     cta: 'Get hotshot dispatch',
   },
   {
@@ -15,7 +15,7 @@ const CARDS = [
     label: 'Flatbed semi truck hauling steel bundles held with orange straps',
     title: 'Flatbed dispatch',
     spec: 'Semis pulling a 48 or 53 ft flatbed or step deck',
-    points: ['Steel, lumber, pipe and machinery', 'Step deck freight', 'Securement needs confirmed before you accept', 'Tarp pay negotiated up front and written into the rate con'],
+    points: ['Steel, lumber, pipe and machinery', 'Step deck freight', 'Securement needs confirmed before you accept', 'Tarp pay negotiated up front and written into the rate con', 'Same-day funding on eligible loads, cut-off times apply'],
     cta: 'Get flatbed dispatch',
   },
   {
@@ -23,7 +23,7 @@ const CARDS = [
     label: `26 foot box truck with the ${SITE.brand} logo on the side`,
     title: 'Box truck dispatch',
     spec: '16 to 26 ft straight trucks, CDL or non-CDL, liftgate or dock-high',
-    points: ['Palletized and LTL freight', 'Retail, final-mile and regional runs', 'Dock and liftgate needs checked first', 'City time and appointment windows planned in'],
+    points: ['Palletized and LTL freight', 'Retail, final-mile and regional runs', 'Dock and liftgate needs checked first', 'City time and appointment windows planned in', 'First load with no dispatch fee for approved carriers'],
     cta: 'Get box truck dispatch',
   },
 ];

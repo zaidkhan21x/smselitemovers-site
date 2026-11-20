@@ -482,6 +482,11 @@ fieldset.field{border:0;padding:0;margin:0}
 .perk-card-text{display:flex;flex-direction:column;gap:5px}
 .perk-card-kicker{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2)}
 .perk-card strong{font-size:18px;font-weight:600;line-height:1.28;color:var(--text)}
+.perk-card-cond{font-size:13px;line-height:1.4;color:var(--text-2)}
+.perk-points{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px;max-width:50ch}
+.perk-points li{position:relative;padding-left:28px;font-size:16px;line-height:1.5;color:rgba(242,237,234,.92)}
+.perk-points li::before{content:'';position:absolute;left:0;top:.42em;width:14px;height:14px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px rgba(255,138,61,.18)}
+.is-light .perk-points li{color:rgba(17,17,17,.82)}
 .perk-card-go{margin-top:auto;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(242,237,234,.2);color:var(--text);transition:transform 220ms var(--ease-out),background-color 200ms ease,color 200ms ease,border-color 200ms ease}
 .perk-card-go svg{width:16px;height:16px}
 .perk-card:active{transform:scale(.98)}
@@ -594,6 +599,7 @@ fieldset.field{border:0;padding:0;margin:0}
 .reward-card p{margin-top:12px;color:rgba(242,237,234,.8);max-width:52ch}
 .reward-card.is-light p{color:rgba(17,17,17,.72)}
 .reward-card .reward-fine{margin-top:14px;padding-top:14px;border-top:1px solid rgba(17,17,17,.14);font-size:14px;line-height:1.5}
+.reward-card.is-indigo .reward-fine{border-top-color:rgba(242,237,234,.16);color:rgba(242,237,234,.72)}
 .reward-foot{margin-top:auto;padding-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
 .reward-terms{font-size:14px;color:var(--text-2)}
 .is-light .reward-terms{color:rgba(17,17,17,.7)}

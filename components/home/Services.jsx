@@ -129,13 +129,14 @@ const SERVICES = [
   {
     icon: 'factoring',
     title: 'Factoring & Payment Support',
-    body: 'Help choosing a factoring company, submitting paperwork and following up on late payments.',
+    body: 'Get paid without the wait: same-day funding on eligible loads through our factoring partner, a fuel advance on qualifying booked loads, and late payments chased for you.',
     points: [
-      'Help choosing and setting up a factoring company',
-      "Load paperwork submitted so funding isn't held up",
+      'Same-day funding on eligible loads through our factoring partner (cut-off times apply)',
+      'A fuel advance on qualifying booked loads, confirmed with your dispatcher first',
+      "Load paperwork submitted so funding isn't held up, and help choosing a factoring company if you'd rather use your own",
       'Late payments followed up with brokers until they clear',
     ],
-    cta: 'Sort out my payments',
+    cta: 'Get paid faster',
   },
   {
     icon: 'newmc',

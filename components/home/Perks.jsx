@@ -59,7 +59,7 @@ function PayoutVisual() {
       </div>
       <div className="pv-toast">
         <CheckIcon ariaHidden={false} />
-        <span>Delivered · POD sent · <b>Paid today</b></span>
+        <span>Delivered · POD sent · <b>Funded today</b></span>
       </div>
     </div>
   );
@@ -97,7 +97,7 @@ function FuelVisual() {
 }
 
 /* First-load settlement sheet: the dispatch fee is struck to $0,
-   then the "first load on us" stamp lands. */
+   then the "first load, $0 dispatch" stamp lands. */
 function FirstLoadVisual() {
   return (
     <div className="pv pv-first perk-anim" aria-hidden="true">
@@ -109,9 +109,9 @@ function FirstLoadVisual() {
           <span>Dispatch fee</span>
           <span className="bill-amt"><span className="bill-was"><i className="skel" /><i className="strike" /></span><b className="bill-zero">$0</b></span>
         </li>
-        <li><span>Long-term contract</span><b>None</b></li>
+        <li><span>Long-term commitment</span><b>None</b></li>
       </ul>
-      <div className="stamp">First load<br />on us</div>
+      <div className="stamp">First load<br />$0 dispatch</div>
     </div>
   );
 }
@@ -138,6 +138,7 @@ function OfferStrip() {
                 <span className="perk-card-text">
                   <span className="perk-card-kicker">{o.name}</span>
                   <strong>{o.strip}</strong>
+                  {o.cond && <span className="perk-card-cond">{o.cond}</span>}
                 </span>
                 <span className="perk-card-go"><ArrowIcon /></span>
               </a>
@@ -160,6 +161,9 @@ function OfferSection({ offer, index }) {
             <p className="perk-kicker"><span className="perk-count">{`0${index + 1}`}</span>{offer.name}</p>
             <h2 className="perk-h" id={titleId}>{offer.title}</h2>
             <p className="lede">{offer.sub}</p>
+            <ul className="perk-points">
+              {offer.points.map((pt) => <li key={pt}>{pt}</li>)}
+            </ul>
           </div>
           <div className="perk-visual">{Visual && <Visual />}</div>
           <ol className="perk-steps perk-anim" aria-label={`How ${offer.name.toLowerCase()} works`}>

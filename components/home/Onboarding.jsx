@@ -2,10 +2,10 @@ import { SITE, TEL_HREF } from '@/lib/site';
 import { Truck } from '@/components/trucks';
 
 const STEPS = [
-  { title: 'Tell us about your truck', body: 'Call or send the form with your truck, home base and preferred lanes.' },
+  { title: 'Tell us about your truck', body: 'Call or send the form with your truck, home base, MC and the lanes you like. New MC or established, we tell you what applies.' },
   { title: 'Send your documents', body: "MC authority, W-9, certificate of insurance, and a notice of assignment if you use factoring. We'll help with anything missing." },
-  { title: 'Set your terms', body: "Minimum rate, max deadhead, home time and the freight you won't haul." },
-  { title: 'Roll your first load', body: 'We book it, you approve it, and we start on the next one.' },
+  { title: 'Set your terms', body: "Minimum rate, max deadhead, home time and the freight you won't haul. We walk you through same-day funding and fuel advances, and you sign the dispatch agreement before any load is booked." },
+  { title: 'Roll your first load', body: "We book it, you approve it, and we start on the next one. If you qualify, there's no dispatch fee on this first load." },
 ];
 
 /* type: the equipment currently selected (drives the little truck on the road). */

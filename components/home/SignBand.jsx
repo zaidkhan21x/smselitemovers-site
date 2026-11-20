@@ -15,7 +15,7 @@ export function SignBand() {
               <div>
                 <h2 id="signTitle">Talk to a dispatcher</h2>
                 <div className="sign-num"><a href={TEL_HREF} data-call>{SITE.phoneDisplay}</a></div>
-                <p>Tell us your truck and the lanes you like. We&apos;ll tell you straight how we&apos;d run your week.</p>
+                <p>Tell us your truck, your MC and the lanes you like. We&apos;ll tell you straight how we&apos;d run your week and which offers apply to you.</p>
               </div>
               <svg className="sign-arrow" viewBox="0 0 100 100" fill="none" aria-hidden="true">
                 <path d="M26 22L74 70" stroke="currentColor" strokeWidth="12" strokeLinecap="round" />

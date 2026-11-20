@@ -6,11 +6,16 @@
 import { notFound } from 'next/navigation';
 import { HomePage } from '@/components/home/HomePage';
 import { homeMetadata, homeViewport } from '@/lib/home-metadata';
-import { OFFER_SLUGS } from '@/lib/offers';
+import { OFFER_SLUGS, offerMetadata } from '@/lib/offers';
 
 export const dynamicParams = false;
-export const metadata = homeMetadata;
 export const viewport = homeViewport;
+
+// Each offer page gets its own title and description; canonical stays "/".
+export async function generateMetadata({ params }) {
+  const { offer } = await params;
+  return offerMetadata(homeMetadata, offer);
+}
 
 export function generateStaticParams() {
   return OFFER_SLUGS.map((offer) => ({ offer }));

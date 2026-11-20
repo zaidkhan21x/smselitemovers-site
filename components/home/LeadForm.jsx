@@ -24,11 +24,11 @@ export function LeadForm({ type, offer = null }) {
       <div className="wrap lead-grid">
         <div>
           <h2 className="h2" id="leadTitle">Get dispatched</h2>
-          <p className="lede" style={{ marginTop: '18px' }}>{`Call ${SITE.phoneDisplay} or send the form with your truck, home base and the lanes you like.`}</p>
+          <p className="lede" style={{ marginTop: '18px' }}>{`Call ${SITE.phoneDisplay} or send the form with your truck, home base and the lanes you like. It takes about two minutes, and nothing is booked without your OK.`}</p>
           <ol className="next-steps">
-            <li><div><strong>We call you back</strong><span>A dispatcher who&apos;ll actually work your truck.</span></div></li>
+            <li><div><strong>We call you back</strong><span>A dispatcher who&apos;ll actually work your truck, and tell you which offers apply to you.</span></div></li>
             <li><div><strong>We set your lanes and rate floor</strong><span>Your rules, written down before we book anything.</span></div></li>
-            <li><div><strong>We book your first load</strong><span>You approve it. Then we start on the next one.</span></div></li>
+            <li><div><strong>We book your first load</strong><span>You approve it. If you qualify, no dispatch fee on that first load. Then we start on the next one.</span></div></li>
           </ol>
           <div className="call-card">
             <div className="lbl">Rather talk now?</div>
@@ -99,7 +99,7 @@ export function LeadForm({ type, offer = null }) {
           <div className="form-done" role="status">
             <div className="ok" aria-hidden="true"><CheckIcon ariaHidden={false} /></div>
             <h3 id="doneTitle">Request sent</h3>
-            <p>A dispatcher will call you back to talk through your lanes and rates. Want to talk now? Call <a href={TEL_HREF} data-call>{SITE.phoneDisplay}</a>.</p>
+            <p>A dispatcher will call you back to talk through your lanes, your rates and which offers apply to you. Want to talk now? Call <a href={TEL_HREF} data-call>{SITE.phoneDisplay}</a>.</p>
           </div>
         </form>
       </div>

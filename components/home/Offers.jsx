@@ -12,7 +12,7 @@ export function Offers() {
               <a className="btn btn-signal" href="#contact">Talk to a dispatcher</a>
             </div>
           </div>
-          <p className="lede">A truck dispatcher should work for the person who owns the truck. Here&apos;s how SMS Elite Mover does it.</p>
+          <p className="lede">Load boards reward whoever clicks fastest. We work for the person who owns the truck: you set the rules, you approve every load, and we&apos;re built for carriers who want a dispatcher for the long haul.</p>
         </div>
 
         <div className="bento">
