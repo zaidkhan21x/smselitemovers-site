@@ -234,7 +234,7 @@ export default function HomeController({ initialType, hasVariant }) {
     else on(window, 'resize', setSceneH);
 
     /* pause decorative motion while it is off-screen */
-    const animatedAreas = [heroPanel, $('#prebookCard'), $('.c-dedicated')];
+    const animatedAreas = [heroPanel, $('#prebookCard'), $('.c-dedicated'), ...$$('.perk-panel, .reward-card')];
     animatedAreas.forEach(promote);
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => entries.forEach((en) => {
@@ -243,6 +243,22 @@ export default function HomeController({ initialType, hasVariant }) {
       }), { rootMargin: '50px' });
       animatedAreas.forEach((el) => io.observe(el));
       observers.push(io);
+    }
+
+    /* ---------- Driver offers: scroll-in ----------
+       Only blocks that are still below the fold now are hidden and then
+       faded in when they arrive, so nothing already visible blinks. */
+    const perksEl = $('#perks');
+    if (perksEl && !reduceMotion && 'IntersectionObserver' in window) {
+      const waiting = $$('.reveal', perksEl).filter((el) => el.getBoundingClientRect().top > window.innerHeight * 0.9);
+      waiting.forEach((el) => el.classList.add('is-waiting'));
+      const rio = new IntersectionObserver((entries) => entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        en.target.classList.remove('is-waiting');
+        rio.unobserve(en.target);
+      }), { rootMargin: '0px 0px -10% 0px' });
+      waiting.forEach((el) => rio.observe(el));
+      observers.push(rio);
     }
 
     /* ---------- Offer demo (illustration) ---------- */
