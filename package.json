@@ -16,5 +16,12 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "nodemailer": "^9.0.0"
-  }
+  },
+  "browserslist": [
+    "chrome >= 87",
+    "edge >= 88",
+    "firefox >= 78",
+    "safari >= 14",
+    "ios_saf >= 14"
+  ]
 }
